@@ -23,7 +23,8 @@
 
 <body>
     <div id="app">
-        <menu-component :user-name="{{ Auth::check() ? json_encode(Auth::user()->name) : json_encode('Account') }}">
+        <menu-component :user-name="{{ Auth::check() ? json_encode(Auth::user()->name) : json_encode('Account') }}"
+            :is-logged-in="{{ Auth::check() ? 'true' : 'false' }}">
             @yield('content')
         </menu-component>
     </div>
