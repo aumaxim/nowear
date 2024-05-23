@@ -12,46 +12,38 @@
                         }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
-                <v-divider></v-divider>
-                <v-list-item
-                    class="rounded-lg mr-8 ml-8"
-                    v-for="(item, index) in items"
-                    :key="index"
-                    link
-                    :href="item.href"
-                    :class="{ active: isActive(item.href) }"
-                >
-                    <template v-slot:prepend>
-                        <v-icon :icon="item.icon"></v-icon>
-                    </template>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                </v-list-item>
-                <v-divider></v-divider>
-                <v-list-item
-                    v-if="isLoggedIn"
-                    class="rounded-lg mr-8 ml-8"
-                    link
-                    href="/logout"
-                >
-                    <template v-slot:prepend>
-                        <v-icon icon="mdi-logout"></v-icon>
-                    </template>
-                    <v-list-item-title>Log out</v-list-item-title>
-                </v-list-item>
-                <v-list-item
-                    class="rounded-lg mr-8 ml-8"
-                    v-for="(item, index) in items2"
-                    v-if="!isLoggedIn"
-                    :key="index"
-                    link
-                    :href="item.href"
-                    :class="{ active: isActive(item.href) }"
-                >
-                    <template v-slot:prepend>
-                        <v-icon :icon="item.icon"></v-icon>
-                    </template>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                </v-list-item>
+                <v-divider class="mb-10"></v-divider>
+                <v-container>
+                    <v-list-item
+                        class="rounded-lg justify-center flex items-center"
+                        v-for="(item, index) in items"
+                        :key="index"
+                        link
+                        :href="item.href"
+                        :class="{ active: isActive(item.href) }"
+                    >
+                        <template v-slot:prepend>
+                            <v-icon :icon="item.icon"></v-icon>
+                        </template>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item>
+                    <v-divider v-if="!isLoggedIn"></v-divider>
+
+                    <v-list-item
+                        class="rounded-lg mr-8 ml-8"
+                        v-for="(item, index) in notlogin"
+                        v-if="!isLoggedIn"
+                        :key="index"
+                        link
+                        :href="item.href"
+                        :class="{ active: isActive(item.href) }"
+                    >
+                        <template v-slot:prepend>
+                            <v-icon :icon="item.icon"></v-icon>
+                        </template>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item>
+                </v-container>
             </v-list>
         </v-navigation-drawer>
         <v-main>
@@ -80,16 +72,18 @@ export default {
 
 <script setup>
 const items = [
-    { title: "Home", href: "/home", icon: "mdi-home" },
+    { title: "Home", href: "/home", icon: "mdi-home-variant" },
     { title: "Search", href: "/search", icon: "mdi-magnify" },
     { title: "Camera", href: "/camera", icon: "mdi-camera" },
     { title: "Wardrobe", href: "/Wardrobe", icon: "mdi-wardrobe" },
     { title: "Profile", href: "/profile", icon: "mdi-account" },
+    { title: "Log out", href: "/logout", icon: "mdi-logout" },
 ];
-const items2 = [
+const notlogin = [
     { title: "Log in", href: "/login", icon: "mdi-login" },
     { title: "Register", href: "/register", icon: "mdi-account-plus" },
 ];
+
 const currentPath = window.location.pathname;
 console.log(currentPath);
 const isActive = (href) => {
